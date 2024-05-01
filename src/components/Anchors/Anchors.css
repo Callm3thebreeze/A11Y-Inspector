@@ -1,0 +1,27 @@
+.anchors {
+  background: #e5e7eb;
+}
+
+.anchors td {
+  padding: 5px;
+}
+
+.anchors td.danger {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.anchors td.warning {
+  background-color: rgb(255, 237, 213);
+}
+
+.anchors td.success {
+  background-color: #bbf7d0;
+}
+
+.anchors td:first-child {
+  border-right: 1px solid #ccc !important;
+}
+
+.anchors td:last-child {
+  border-left: 1px solid #ccc !important;
+}

@@ -1,0 +1,27 @@
+.forms {
+  background: #e5e7eb;
+}
+
+.forms td {
+  padding: 5px;
+}
+
+.forms td.danger {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.forms td.warning {
+  background-color: rgb(255, 237, 213);
+}
+
+.forms td.success {
+  background-color: #bbf7d0;
+}
+
+.forms td:first-child {
+  border-right: 1px solid #ccc !important;
+}
+
+.forms td:last-child {
+  border-left: 1px solid #ccc !important;
+}

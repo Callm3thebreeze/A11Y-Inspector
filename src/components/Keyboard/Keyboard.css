@@ -1,0 +1,42 @@
+.keyboard {
+  background: #e5e7eb;
+}
+
+.keyboard td {
+  padding: 5px;
+}
+
+.keyboard td.danger {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.keyboard td.warning {
+  background-color: rgb(255, 237, 213);
+}
+
+.keyboard td.success {
+  background-color: #bbf7d0;
+}
+
+.keyboard td:first-child {
+  border-right: 1px solid #ccc !important;
+}
+
+.keyboard td:last-child {
+  border-left: 1px solid #ccc !important;
+}
+
+@keyframes highlight {
+  from {
+    background-color: yellow;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.highlight {
+  animation-name: highlight;
+  animation-duration: 2s;
+  border: 3px solid red;
+}

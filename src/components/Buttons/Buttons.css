@@ -1,0 +1,27 @@
+.buttons {
+  background: #e5e7eb;
+}
+
+.buttons td {
+  padding: 5px;
+}
+
+.buttons td.danger {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.buttons td.warning {
+  background-color: rgb(255, 237, 213);
+}
+
+.buttons td.success {
+  background-color: #bbf7d0;
+}
+
+.buttons td:first-child {
+  border-right: 1px solid #ccc !important;
+}
+
+.buttons td:last-child {
+  border-left: 1px solid #ccc !important;
+}

@@ -1,0 +1,27 @@
+.images {
+  background: #e5e7eb;
+}
+
+.images td {
+  padding: 5px;
+}
+
+.images td.danger {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.images td.warning {
+  background-color: rgb(255, 237, 213);
+}
+
+.images td.success {
+  background-color: #BBF7D0;
+}
+
+.images td:first-child {
+  border-right: 1px solid #ccc !important;
+}
+
+.images td:last-child {
+  border-left: 1px solid #ccc !important;
+}
