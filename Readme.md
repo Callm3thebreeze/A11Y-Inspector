@@ -1,8 +1,8 @@
 <div style='display: flex; justify-content: center; width: 100%;'><img src='src/assets/images/a11y.png' style='width: 120px; height: 120px; border-radius: 50%; margin: 0 auto;' /></div>
 
-# A11Y Analyzer - Chrome Extension
+# A11Y Inspector - Chrome Extension
 
-En este repositorio se encuentra el código de la extensión de Chrome A11y Analyzer.
+En este repositorio se encuentra el código de la extensión de Chrome A11Y Inspector.
 
 ## Instalación + Configuración del proyecto
 
