@@ -1,8 +1,8 @@
 <div style='display: flex; justify-content: center; width: 100%;'><img src='src/assets/images/a11y.png' style='width: 120px; height: 120px; border-radius: 50%; margin: 0 auto;' /></div>
 
-# A11Y Analyzer - Chrome Extension v.2.0.0
+# A11Y Inspector - Chrome Extension v.2.0.0
 
-**A11y Analyzer** es una extensión para Chrome que realiza un análisis automatizado de accesibilidad web en la página activa según las directrices WCAG. Identifica problemas comunes y proporciona información clara y precisa para mejorar la accesibilidad del contenido para usuarios de tecnologías asistivas.
+**A11Y Inspector** es una extensión para Chrome que realiza un análisis automatizado de accesibilidad web en la página activa según las directrices WCAG. Identifica problemas comunes y proporciona información clara y precisa para mejorar la accesibilidad del contenido para usuarios de tecnologías asistivas.
 
 ## Instalación y configuración del proyecto
 
@@ -18,7 +18,7 @@ Para generar la versión distribuible de la extensión, ejecutar `npm run build`
 
 ## Desarrollo de la aplicación
 
-**A11y Analyzer** realiza análisis detallados sobre los siguientes aspectos clave del DOM de la pestaña activa:
+**A11Y Inspector** realiza análisis detallados sobre los siguientes aspectos clave del DOM de la pestaña activa:
 
 - **Resumen:** Información general esencial de la página.
 - **Enlaces:** Accesibilidad y estructura de enlaces (`<a>`).
@@ -108,32 +108,35 @@ El componente **Anchors** analiza todos los enlaces (`<a>`) de una página web p
 ## Criterios de evaluación
 
 ### Atributo `href`
+
 - **Presencia**: Verifica que el enlace tenga un atributo `href` no vacío
 - **Adecuación**: Identifica enlaces sin `href` que deberían etiquetarse como botones
 
 ### Texto del enlace
+
 - **Descriptividad**: Evalúa si el texto describe adecuadamente el destino o función del enlace
 - **Calidad**: Analiza si el texto evita términos genéricos como "Haz clic aquí" o "Más"
 - **Alternativas**: Comprueba el atributo `title` cuando el texto visible no es suficiente
 
 ### Estructura
+
 - **Anidamiento válido**: Detecta elementos interactivos incorrectamente anidados dentro de enlaces
 - **Compatibilidad**: Identifica estructuras que podrían causar problemas en lectores de pantalla
 
 ## Indicadores visuales
 
-| Indicador | Significado |
-|-----------|-------------|
-| ✅ | Enlace correctamente implementado |
-| ⚠️ | Advertencias sobre problemas en el enlace |
+| Indicador | Significado                               |
+| --------- | ----------------------------------------- |
+| ✅        | Enlace correctamente implementado         |
+| ⚠️        | Advertencias sobre problemas en el enlace |
 
 ## Mensajes de error y advertencia
 
-| Mensaje | Caso de aparición | Severidad |
-|---------|-------------------|-----------|
-| ⚠️ Revisar anidamiento dentro del enlace | Enlaces que contienen elementos interactivos anidados | Advertencia |
-| ⚠️ Etiquetar como button si no lanza navegación | Enlaces sin atributo `href` o con `href` vacío | Advertencia |
-| ⚠️ Comprobar que el texto sea descriptivo | Enlaces con texto genérico o insuficientemente descriptivo | Advertencia |
+| Mensaje                                         | Caso de aparición                                          | Severidad   |
+| ----------------------------------------------- | ---------------------------------------------------------- | ----------- |
+| ⚠️ Revisar anidamiento dentro del enlace        | Enlaces que contienen elementos interactivos anidados      | Advertencia |
+| ⚠️ Etiquetar como button si no lanza navegación | Enlaces sin atributo `href` o con `href` vacío             | Advertencia |
+| ⚠️ Comprobar que el texto sea descriptivo       | Enlaces con texto genérico o insuficientemente descriptivo | Advertencia |
 
 ## Funciones principales
 
@@ -161,6 +164,7 @@ Este componente ayuda a cumplir los siguientes criterios WCAG:
 - **1.3.1** Información y relaciones (Nivel A)
 
 Los enlaces accesibles son fundamentales para la navegación web, especialmente para usuarios de lectores de pantalla que requieren estructuras claras y textos descriptivos para navegar eficientemente.
+
 # Botones
 
 El componente **Buttons** analiza todos los elementos `<button>` de una página web para evaluar su accesibilidad según las directrices **WCAG**. Examina la calidad del texto descriptivo y la estructura interna del botón para asegurar que sean comprensibles y operables por usuarios de tecnologías asistivas.
@@ -174,30 +178,32 @@ El componente **Buttons** analiza todos los elementos `<button>` de una página 
 ## Criterios de evaluación
 
 ### Texto del botón
+
 - **Descriptividad**: Verifica que el texto sea suficientemente descriptivo de la acción
 - **Presencia**: Comprueba que exista texto visible o un título alternativo
 - **Calidad**: Evalúa si el texto evita términos genéricos como "Haz clic aquí" o "Más"
 
 ### Estructura interna
+
 - **Anidamiento válido**: Verifica que los botones solo contengan elementos HTML permitidos
 - **Elementos seguros**: Asegura que no haya elementos interactivos incorrectamente anidados dentro de botones
 - **Compatibilidad**: Identifica estructuras que podrían causar problemas en lectores de pantalla
 
 ## Indicadores visuales
 
-| Indicador | Significado |
-|-----------|-------------|
-| ✅ | Botón correctamente implementado |
-| ⚠️ | Advertencia sobre el texto del botón |
+| Indicador                                             | Significado                              |
+| ----------------------------------------------------- | ---------------------------------------- |
+| ✅                                                    | Botón correctamente implementado         |
+| ⚠️                                                    | Advertencia sobre el texto del botón     |
 | ⚠️ Anidamiento puede causar comportamiento inesperado | Error en la estructura interna del botón |
 
 ## Mensajes de error y advertencia
 
-| Mensaje | Caso de aparición | Severidad |
-|---------|-------------------|-----------|
-| ⚠️ Anidamiento puede causar comportamiento inesperado | Botón con elementos HTML no permitidos en su interior | Peligro |
-| ⚠️ Problemas en texto descriptivo | Texto genérico o insuficientemente descriptivo de la acción del botón | Advertencia |
-| ⚠️ Texto vacío o insuficiente | Botón sin texto o con texto demasiado breve | Advertencia |
+| Mensaje                                               | Caso de aparición                                                     | Severidad   |
+| ----------------------------------------------------- | --------------------------------------------------------------------- | ----------- |
+| ⚠️ Anidamiento puede causar comportamiento inesperado | Botón con elementos HTML no permitidos en su interior                 | Peligro     |
+| ⚠️ Problemas en texto descriptivo                     | Texto genérico o insuficientemente descriptivo de la acción del botón | Advertencia |
+| ⚠️ Texto vacío o insuficiente                         | Botón sin texto o con texto demasiado breve                           | Advertencia |
 
 ## Funciones principales
 
@@ -482,11 +488,11 @@ La correcta implementación de enlaces internos mejora la navegabilidad de la p�
 
 ## Indicadores visuales
 
-| Indicador            | Significado                                |
-| -------------------- | ------------------------------------------ |
-| ✅                   | Elemento accesible sin problemas           |
-| ✅ Decorativo        | Elemento decorativo correctamente marcado  |
-| ⚠️                   | Advertencias que requieren revisión manual |
+| Indicador            | Significado                                            |
+| -------------------- | ------------------------------------------------------ |
+| ✅                   | Elemento accesible sin problemas                       |
+| ✅ Decorativo        | Elemento decorativo correctamente marcado              |
+| ⚠️                   | Advertencias que requieren revisión manual             |
 | ⚠️ alt No encontrado | Elementos sin texto alternativo ni haria-hidden="true" |
 
 ## Mensajes de error y advertencia
