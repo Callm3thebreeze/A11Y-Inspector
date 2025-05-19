@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classnames from "tailwindcss-classnames";
-import { getClassSelector, highlightElement } from "../../utils/commonMethods";
+import {
+  getClassSelector,
+  highlightElement,
+  checkButtonText,
+} from "../../entrypoints/data-panel/utils/commonMethods";
 import "./Buttons.css";
 
 const styles = {
@@ -89,6 +93,7 @@ const Buttons = ({ tabId, body, updateAnalysis }) => {
         title: el.title,
         classList: el.classList.toString(),
         isHtmlInsideValid: checkInnerHtml(el),
+        textStatus: checkButtonText(el),
       }));
       setButtons(data);
     }
@@ -96,13 +101,18 @@ const Buttons = ({ tabId, body, updateAnalysis }) => {
 
   useEffect(() => {
     if (buttons) updateAnalysis({ update: { buttons } });
-  }, [buttons]);
+  }, [buttons, updateAnalysis]);
 
   let filteredButtons;
 
   switch (filter) {
     case "OK":
-      filteredButtons = buttons.filter((button) => button.isHtmlInsideValid);
+      filteredButtons = buttons.filter(
+        (button) => button.isHtmlInsideValid && button.textStatus === "OK"
+      );
+      break;
+    case "WARNING":
+      filteredButtons = buttons.filter((button) => button.textStatus !== "OK");
       break;
     case "DANGER":
       filteredButtons = buttons.filter((button) => !button.isHtmlInsideValid);
@@ -119,6 +129,7 @@ const Buttons = ({ tabId, body, updateAnalysis }) => {
             <tr className={styles.tr}>
               <th className={styles.th}>Button Text</th>
               <th className={styles.th}>Class</th>
+              <th className={styles.th}>Text status</th>
               <th className={styles.thFilter}>
                 Result
                 <select
@@ -134,13 +145,15 @@ const Buttons = ({ tabId, body, updateAnalysis }) => {
 
             {filteredButtons.map((button) => {
               const classSelector = getClassSelector(button.classList);
+              const statusClass = !button.isHtmlInsideValid
+                ? "danger"
+                : button.textStatus !== "OK"
+                ? "warning"
+                : "success";
               const cdTDButtonStatus = classnames(
                 styles.tdResult,
                 "break-normal",
-                {
-                  danger: !button.isHtmlInsideValid,
-                  success: button.isHtmlInsideValid,
-                }
+                statusClass
               );
 
               return (
@@ -153,10 +166,13 @@ const Buttons = ({ tabId, body, updateAnalysis }) => {
                     {button.text ? button.text : button.title}
                   </td>
                   <td className={styles.tdBtnData}>{button.classList}</td>
+                  <td className={styles.tdResult}>{button.textStatus} </td>
                   <td className={cdTDButtonStatus}>
                     {!button.isHtmlInsideValid
-                      ? "⚠️ REVISAR: anidamiento puede causar comportamiento inesperado"
-                      : "OK"}
+                      ? "⚠️ Anidamiento puede causar comportamiento inesperado"
+                      : button.textStatus !== "OK"
+                      ? "⚠️"
+                      : "✅"}
                   </td>
                 </tr>
               );

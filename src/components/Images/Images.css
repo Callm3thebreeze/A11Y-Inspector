@@ -15,7 +15,7 @@
 }
 
 .images td.success {
-  background-color: #BBF7D0;
+  background-color: #bbf7d0;
 }
 
 .images td:first-child {
@@ -24,4 +24,20 @@
 
 .images td:last-child {
   border-left: 1px solid #ccc !important;
+}
+
+.btn-ocr {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid transparent;
+  font-weight: 600;
+  box-shadow: 0 4px 6px #0000004a;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-ocr:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px #00000075;
 }

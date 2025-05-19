@@ -2,7 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Vodafone";
+  src: local("Vodafone Lt Regular"),
+    url("../fonts/vodafone/vodafone-light.woff2") format("woff2"),
+    url("../fonts/vodafone/vodafone-light.woff") format("woff");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vodafone";
+  src: local("Vodafone Rg Regular"),
+    url("../fonts/vodafone/vodafone-regular.woff2") format("woff2"),
+    url("../fonts/vodafone/vodafone-regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vodafone";
+  src: local("Vodafone Rg Bold"),
+    url("../fonts/vodafone/vodafone-bold.woff2") format("woff2"),
+    url("../fonts/vodafone/vodafone-bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Vodafone" !important;
 }

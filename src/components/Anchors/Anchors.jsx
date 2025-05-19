@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classnames from "tailwindcss-classnames";
-import { getClassSelector, highlightElement } from "../../utils/commonMethods";
+import {
+  getClassSelector,
+  highlightElement,
+  checkButtonText,
+} from "../../entrypoints/data-panel/utils/commonMethods";
 
 import "./Anchors.css";
 
@@ -34,6 +38,7 @@ const styles = {
   tdHref: classnames("border-l", "border-gray-400", "break-all"),
   tdHrefError: classnames("border-l", "border-gray-400", "break-all", "danger"),
   tdResult: classnames("border-l", "border-gray-400", "w-40"),
+  tdTextStatus: classnames("border-l", "border-gray-400", "w-40"),
 };
 
 const getHrefClass = ({ condition }) =>
@@ -82,6 +87,7 @@ const Anchors = ({ tabId, body, updateAnalysis }) => {
           el.getAttribute("href") === null || el.getAttribute("href") === ""
             ? false
             : true,
+        textStatus: checkButtonText(el),
       }));
       setAnchors(data);
     }
@@ -89,20 +95,24 @@ const Anchors = ({ tabId, body, updateAnalysis }) => {
 
   useEffect(() => {
     if (anchors) updateAnalysis({ update: { anchors } });
-  }, [anchors]);
+  }, [anchors, updateAnalysis]);
 
   let filteredAnchors;
 
   switch (filter) {
     case "OK":
       filteredAnchors = anchors.filter(
-        (anchor) => anchor.invalidHtmlInside === false
+        (anchor) =>
+          anchor.invalidHtmlInside === false && anchor.textStatus === "OK" // se filtra por textStatus OK además de las comprobaciones previas
       );
       break;
     case "WARNING":
       filteredAnchors = anchors.filter(
         (anchor) =>
-          anchor.href === null || anchor.href === "" || anchor.invalidHtmlInside
+          anchor.href === null ||
+          anchor.href === "" ||
+          anchor.invalidHtmlInside ||
+          anchor.textStatus !== "OK"
       );
       break;
     default:
@@ -117,6 +127,7 @@ const Anchors = ({ tabId, body, updateAnalysis }) => {
             <tr className={styles.tr}>
               <th className={styles.th}>Anchor</th>
               <th className={styles.th}>Href</th>
+              <th className={styles.th}>Text status</th>
               <th className={styles.thFilter}>
                 Result
                 <select
@@ -137,7 +148,13 @@ const Anchors = ({ tabId, body, updateAnalysis }) => {
                   anchor.href === null ||
                   anchor.href === "" ||
                   anchor.invalidHtmlInside,
-                success: anchor.href && !anchor.invalidHtmlInside,
+                success:
+                  anchor.href &&
+                  !anchor.invalidHtmlInside &&
+                  anchor.textStatus === "OK",
+                warning:
+                  anchor.textStatus ===
+                  "Comprobar que el texto sea descriptivo",
               });
 
               return (
@@ -156,17 +173,19 @@ const Anchors = ({ tabId, body, updateAnalysis }) => {
                     })}
                   >
                     {anchor.invalidHtmlInside
-                      ? "REVISAR: Anidamiento dentro del enlace"
+                      ? "⚠️ Revisar anidamiento dentro del enlace"
                       : anchor.href === null || anchor.href === ""
-                      ? "REVISAR: Etiquetar como button si no lanza navegación"
+                      ? "⚠️ Etiquetar como button si no lanza navegación"
                       : anchor.href}
                   </td>
+                  <td className={styles.tdTextStatus}>{anchor.textStatus} </td>
                   <td className={tdHrefStatus}>
                     {anchor.href === null ||
                     anchor.href === "" ||
-                    anchor.invalidHtmlInside
+                    anchor.invalidHtmlInside ||
+                    anchor.textStatus !== "OK"
                       ? "⚠️"
-                      : "OK"}
+                      : "✅"}
                   </td>
                 </tr>
               );

@@ -33,33 +33,40 @@ const InternalLinking = ({ url, body, updateAnalysis }) => {
   const [internalLinking, setInternalLinking] = useState(undefined);
 
   useEffect(() => {
+    if (!body) return;
     if (body) {
-      const data = [...body.querySelectorAll("a")].reduce((acc, link) => {
-        let href = link.getAttribute("href").trim().split("?")[0];
-        if (href.startsWith("#")) {
-          const exists = acc.find((el) => el.href === url);
-          if (exists) exists.links.push(link);
-          else
-            acc.push({
-              href: url,
-              links: [link],
-            });
-        } else {
-          const exists = acc.find((el) => el.href === href);
-          if (exists) exists.links.push(link);
-          else
-            acc.push({
-              href,
-              links: [link],
-            });
-        }
-        return acc;
-      }, []);
+      const data = [...body.querySelectorAll("a")]
+        .filter(
+          (el) =>
+            el.getAttribute("href")?.startsWith("https://www.vodafone.es") ||
+            el.getAttribute("href")?.startsWith("#")
+        )
+        .reduce((acc, link) => {
+          let href = link.getAttribute("href").trim().split("?")[0];
+          if (href.startsWith("#")) {
+            const exists = acc.find((el) => el.href === url);
+            if (exists) exists.links.push(link);
+            else
+              acc.push({
+                href: url,
+                links: [link],
+              });
+          } else {
+            const exists = acc.find((el) => el.href === href);
+            if (exists) exists.links.push(link);
+            else
+              acc.push({
+                href,
+                links: [link],
+              });
+          }
+          return acc;
+        }, []);
 
       setInternalLinking(data);
       updateAnalysis({ update: { internalLinking: data } });
     }
-  }, [body]);
+  }, [body, updateAnalysis, url]);
 
   return internalLinking ? (
     internalLinking.length > 0 ? (

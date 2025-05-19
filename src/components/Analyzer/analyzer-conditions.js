@@ -1,5 +1,5 @@
 export const checkSection = ({ section, analysis }) => {
-  console.log(analysis);
+  // console.log(analysis);
   switch (section) {
     case "summary":
       return {
@@ -50,9 +50,10 @@ export const checkSection = ({ section, analysis }) => {
       return {
         title: "Headings",
         condition: {
-          danger: !analysis.headings?.find(
-            (heading) => Number(heading.nodeName.at(-1)) === 1
-          ),
+          danger:
+            !analysis.headings?.find(
+              (heading) => Number(heading.nodeName.at(-1)) === 1
+            ) || analysis.headingsBroken,
         },
       };
     case "internalLinking":
