@@ -12,7 +12,8 @@ const DSIcon = ({ id, className }) => {
 };
 
 DSIcon.propTypes = {
-  id: PropTypes.oneOf(["unicorn", "chevron-down", "download"]).isRequired,
+  id: PropTypes.oneOf(["vodafone-esp", "unicorn", "chevron-down", "download"])
+    .isRequired,
   className: PropTypes.string,
 };
 

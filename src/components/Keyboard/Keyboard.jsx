@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classnames from "tailwindcss-classnames";
-import { getClassSelector, highlightElement } from "../../utils/commonMethods";
+import {
+  getClassSelector,
+  highlightElement,
+} from "../../entrypoints/data-panel/utils/commonMethods";
 import "./Keyboard.css";
 
 const styles = {
@@ -39,7 +42,7 @@ function renderItemStatus(isTabbable, isVisible) {
 
   if (!isTabbable) return "⚠️ REVISAR: operabilidad por teclado";
 
-  return "Ok";
+  return "✅";
 }
 
 function getItemStatus(isTabbable, isVisible) {

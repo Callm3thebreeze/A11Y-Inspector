@@ -1,34 +1,34 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import classnames from "tailwindcss-classnames";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'tailwindcss-classnames';
 
 const styles = {
-  base: classnames("w-full", "flex", "flex-col", "gap-1", "p-4"),
-  valueBase: classnames("font-normal", "p-2", "last"),
-  value: classnames("font-normal", "p-2", "last", "bg-gray-100"),
-  bold: classnames("font-bold"),
-  link: classnames("text-primary", "underline", "hover:no-underline"),
-  listElement: classnames("flex", "gap-1"),
-  titleBase: classnames("p-2", "whitespace-nowrap"),
-  title: classnames("p-2", "whitespace-nowrap", "bg-gray-200"),
-  correct: classnames("font-normal", "p-2", "last", "bg-green-200"),
+  base: classnames('w-full', 'flex', 'flex-col', 'gap-1', 'p-4'),
+  valueBase: classnames('font-normal', 'p-2', 'last'),
+  value: classnames('font-normal', 'p-2', 'last', 'bg-gray-100'),
+  bold: classnames('font-bold'),
+  link: classnames('text-primary', 'underline', 'hover:no-underline'),
+  listElement: classnames('flex', 'gap-1'),
+  titleBase: classnames('p-2', 'whitespace-nowrap'),
+  title: classnames('p-2', 'whitespace-nowrap', 'bg-gray-200'),
+  correct: classnames('font-normal', 'p-2', 'last', 'bg-green-200'),
   titleDanger: classnames(
-    "p-2",
-    "whitespace-nowrap",
-    "bg-danger-light",
-    "text-danger-dark",
-    "border",
-    "border-danger-dark",
-    "border-dashed"
+    'p-2',
+    'whitespace-nowrap',
+    'bg-danger-light',
+    'text-danger-dark',
+    'border',
+    'border-danger-dark',
+    'border-dashed'
   ),
   titleWarning: classnames(
-    "p-2",
-    "whitespace-nowrap",
-    "bg-warning-light",
-    "text-warning-dark",
-    "border",
-    "border-warning-dark",
-    "border-dashed"
+    'p-2',
+    'whitespace-nowrap',
+    'bg-warning-light',
+    'text-warning-dark',
+    'border',
+    'border-warning-dark',
+    'border-dashed'
   ),
 };
 
@@ -49,7 +49,7 @@ const TextPlusCharsCount = ({ text }) => (
   </p>
 );
 const Link = ({ url }) => (
-  <a href={url} target="_blank" className={styles.link} rel="noreferrer">
+  <a href={url} target='_blank' className={styles.link} rel='noreferrer'>
     {url}
   </a>
 );
@@ -63,8 +63,8 @@ const Summary = ({ url, head, body, lang, updateAnalysis }) => {
         const langMatch = await getLanguageMatch(body, lang);
         const data = {
           url,
-          title: head.querySelector("title")?.textContent,
-          main: body.querySelector("main"),
+          title: head.querySelector('title')?.textContent,
+          main: body.querySelector('main'),
           lang: lang,
           langMatch: langMatch,
         };
@@ -73,7 +73,7 @@ const Summary = ({ url, head, body, lang, updateAnalysis }) => {
       }
     };
     fetchData();
-  }, [head, body]);
+  }, [head, body, lang, url, updateAnalysis]);
 
   return info ? (
     <ul className={styles.base}>
@@ -100,7 +100,7 @@ const Summary = ({ url, head, body, lang, updateAnalysis }) => {
           Title:
         </span>
         <span className={styles.value}>
-          {info.title ? <TextPlusCharsCount text={info.title} /> : "NO DATA"}
+          {info.title ? <TextPlusCharsCount text={info.title} /> : 'NO DATA'}
         </span>
       </li>
       <li className={styles.listElement}>
@@ -113,7 +113,7 @@ const Summary = ({ url, head, body, lang, updateAnalysis }) => {
           Main Tag:
         </span>
         <span className={styles.value}>
-          {info.main ? "Contains Main Tag" : "NO DATA"}
+          {info.main ? 'Contains Main Tag' : 'NO DATA'}
         </span>
       </li>
       <li className={styles.listElement}>
@@ -126,7 +126,7 @@ const Summary = ({ url, head, body, lang, updateAnalysis }) => {
           Language attribute:
         </span>
         <span className={styles.value}>
-          {info.lang ? "Contains lang" : "NO DATA"}
+          {info.lang ? 'Contains lang' : 'NO DATA'}
         </span>
         <span
           className={getInfoClass({
@@ -134,7 +134,7 @@ const Summary = ({ url, head, body, lang, updateAnalysis }) => {
             cnError: styles.titleWarning,
           })}
         >
-          {info.langMatch ? "Correct lang attribute" : "Data doesn't match"}
+          {info.langMatch ? 'Correct lang attribute' : "Data doesn't match"}
         </span>
       </li>
     </ul>

@@ -12,7 +12,6 @@ table.internal-linking {
 
 .internal-linking td {
   padding: 5px;
-  vertical-align: top;
 }
 
 .internal-linking th:not(:last-child),

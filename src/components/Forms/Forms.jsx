@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classnames from "tailwindcss-classnames";
-import { getClassSelector, highlightElement } from "../../utils/commonMethods";
+import {
+  getClassSelector,
+  highlightElement,
+} from "../../entrypoints/data-panel/utils/commonMethods";
 import "./Forms.css";
 
 const styles = {
@@ -36,30 +39,72 @@ const styles = {
 
 const analyzeItem = (formItem) => {
   const isInputWithoutLabel = formItem.html === "input" && !formItem.hasLabel;
-  const isButton = formItem.type === "button" && formItem.html === "button";
+  const isButton = formItem.html === "button" && formItem.type === "button";
   const isNotFormDescendant = !isButton && !formItem.isAFormDescendant;
 
-  const isOk = !isInputWithoutLabel && (isButton || !isNotFormDescendant);
-  let result = "OK";
-  if (isInputWithoutLabel) result = "⚠️ REVISAR: elemento no tiene label";
+  let isOk = !isInputWithoutLabel && (isButton || !isNotFormDescendant);
+  let result = "✅";
+  if (isInputWithoutLabel) result = "⚠️ Elemento no tiene label";
   if (isNotFormDescendant)
-    result = "⚠️ REVISAR: elemento no está dentro de un formulario";
+    result = "⚠️ Elemento no está dentro de un formulario";
+
+  //atributo autocomplete
+  if (
+    formItem.html === "input" &&
+    ["tel", "email", "name", "address", "username"].includes(formItem.type) &&
+    (!formItem.autocomplete || formItem.autocomplete.trim() === "")
+  ) {
+    result = "⚠️ Ausencia de autocomplete";
+    isOk = false;
+  }
+  // Si NO tiene aria-label, se comprueba si tiene aria-describedby o aria-labelledby.
+  if (!formItem.ariaLabel) {
+    const refIds = formItem.ariaDescribedBy || formItem.ariaLabelledBy;
+    if (refIds) {
+      const firstId = refIds.split(/\s+/)[0];
+      const refElem = document.getElementById(firstId);
+      if (refElem) {
+        const wordCount = refElem.innerText.trim().split(/\s+/).length;
+        if (wordCount < 3) {
+          result = "⚠️ Revisar que el elemento sea descriptivo";
+          isOk = false;
+        }
+      }
+    }
+  }
 
   return { isOk, result };
 };
 
 const hasLabel = (formItem) => {
-  let siblingElement = "";
-  formItem.nextElementSibling
-    ? (siblingElement = formItem.nextElementSibling.localName)
-    : null;
-  if (
-    formItem.parentElement == "label" ||
-    siblingElement == "label" ||
-    formItem.getAttribute("aria-label")
-  )
+  if (formItem.getAttribute("aria-label")) return true;
+  if (formItem.parentElement && formItem.parentElement.localName === "label")
     return true;
+  if (formItem.parentElement) {
+    return Array.from(formItem.parentElement.children).some(
+      (sibling) => sibling !== formItem && sibling.localName === "label"
+    );
+  }
+
   return false;
+};
+
+const getRadioGroupError = (items) => {
+  const radioItems = items.filter(
+    (item) => item.html === "input" && item.type === "radio"
+  );
+  const nameCounts = radioItems.reduce((acc, item) => {
+    if (item.name) {
+      acc[item.name] = (acc[item.name] || 0) + 1;
+    }
+    return acc;
+  }, {});
+  const validGroupExists = Object.values(nameCounts).some(
+    (count) => count >= 2
+  );
+  return validGroupExists || radioItems.length === 0
+    ? null
+    : "⚠️ No se encontraron 2 inputs radio con el mismo atributo name";
 };
 
 const Forms = ({ tabId, body, updateAnalysis }) => {
@@ -79,6 +124,10 @@ const Forms = ({ tabId, body, updateAnalysis }) => {
           text: el.innerText,
           title: el.title,
           classList: el.classList.toString(),
+          autocomplete: el.getAttribute("autocomplete") || "",
+          ariaLabel: el.getAttribute("aria-label") || "",
+          ariaDescribedBy: el.getAttribute("aria-describedby") || "",
+          ariaLabelledBy: el.getAttribute("aria-labelledby") || "",
           sibling: el.nextElementSibling
             ? el.nextElementSibling.localName
             : null,
@@ -97,7 +146,7 @@ const Forms = ({ tabId, body, updateAnalysis }) => {
 
   useEffect(() => {
     if (formItems.length > 0) updateAnalysis({ update: { formItems, allOk } });
-  }, [formItems, allOk]);
+  }, [formItems, allOk, updateAnalysis]);
 
   let filteredformItems;
 
@@ -112,11 +161,20 @@ const Forms = ({ tabId, body, updateAnalysis }) => {
       filteredformItems = formItems;
   }
 
+  const radioErrorMessage = getRadioGroupError(formItems);
+
   return (
     <>
       {formItems && filteredformItems ? (
         <table className={styles.table}>
           <tbody>
+            {radioErrorMessage && (
+              <tr>
+                <td colSpan="6" className="warning">
+                  {radioErrorMessage}
+                </td>
+              </tr>
+            )}
             <tr className={styles.tr}>
               <th className={styles.th}>Item</th>
               <th className={styles.th}>Type</th>

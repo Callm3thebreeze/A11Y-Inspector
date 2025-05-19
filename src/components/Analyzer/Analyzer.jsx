@@ -73,7 +73,7 @@ const Analyzer = ({ analysis, updateAnalysis }) => {
     async function getCurrentTab() {
       const queryOptions = { active: true, lastFocusedWindow: true };
       const [tab] = await chrome.tabs.query(queryOptions);
-      setTabId(tab.id);
+      setTabId(tab?.id);
     }
     getCurrentTab();
   }, []);

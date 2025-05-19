@@ -1,7 +1,7 @@
 import classnames from "tailwindcss-classnames";
 import PropTypes from "prop-types";
 
-const cnBase = classnames("block", "rounded-full", "animate-notificationDot");
+const cnBase = classnames("block", "rounded-full");
 const cnText = classnames("sr-only");
 
 const Dot = ({ type, size = "small" }) => {
