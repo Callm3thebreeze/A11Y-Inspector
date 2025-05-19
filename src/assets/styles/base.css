@@ -3,33 +3,32 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Vodafone";
-  src: local("Vodafone Lt Regular"),
-    url("../fonts/vodafone/vodafone-light.woff2") format("woff2"),
-    url("../fonts/vodafone/vodafone-light.woff") format("woff");
+  font-family: 'ComicNeue';
+  src: local('Comic Neue Light'),
+    url('../fonts/ComicNeue-Light.ttf') format('truetype');
   font-style: normal;
   font-weight: 300;
   font-display: swap;
 }
+
 @font-face {
-  font-family: "Vodafone";
-  src: local("Vodafone Rg Regular"),
-    url("../fonts/vodafone/vodafone-regular.woff2") format("woff2"),
-    url("../fonts/vodafone/vodafone-regular.woff") format("woff");
+  font-family: 'ComicNeue';
+  src: local('Comic Neue'),
+    url('../fonts/ComicNeue-Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
+
 @font-face {
-  font-family: "Vodafone";
-  src: local("Vodafone Rg Bold"),
-    url("../fonts/vodafone/vodafone-bold.woff2") format("woff2"),
-    url("../fonts/vodafone/vodafone-bold.woff") format("woff");
+  font-family: 'ComicNeue';
+  src: local('Comic Neue Bold'),
+    url('../fonts/ComicNeue-Bold.ttf') format('truetype');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
 }
 
 body {
-  font-family: "Vodafone" !important;
+  font-family: 'ComicNeue' !important;
 }

@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import classnames from "tailwindcss-classnames";
-import { SVG } from "./svg";
+import PropTypes from 'prop-types';
+import classnames from 'tailwindcss-classnames';
+import { SVG } from './svg';
 
 const DSIcon = ({ id, className }) => {
-  const classes = classnames(className, "inline-block");
+  const classes = classnames(className, 'inline-block');
   return (
     <>
       <SVG id={id} className={classes} />
@@ -12,14 +12,13 @@ const DSIcon = ({ id, className }) => {
 };
 
 DSIcon.propTypes = {
-  id: PropTypes.oneOf(["vodafone-esp", "unicorn", "chevron-down", "download"])
-    .isRequired,
+  id: PropTypes.oneOf(['unicorn', 'chevron-down', 'download']).isRequired,
   className: PropTypes.string,
 };
 
 DSIcon.defaultProps = {
-  className: "",
+  className: '',
 };
 
-export { SVGSource as IconSource } from "./svg";
+export { SVGSource as IconSource } from './svg';
 export default DSIcon;

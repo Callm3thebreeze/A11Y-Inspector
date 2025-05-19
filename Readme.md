@@ -1,6 +1,6 @@
 <div style='display: flex; justify-content: center; width: 100%;'><img src='src/assets/images/a11y.png' style='width: 120px; height: 120px; border-radius: 50%; margin: 0 auto;' /></div>
 
-# A11Y Inspector - Chrome Extension v.2.0.0
+# A11Y Inspector - Chrome Extension v.2.0.2
 
 **A11Y Inspector** es una extensión para Chrome que realiza un análisis automatizado de accesibilidad web en la página activa según las directrices WCAG. Identifica problemas comunes y proporciona información clara y precisa para mejorar la accesibilidad del contenido para usuarios de tecnologías asistivas.
 
